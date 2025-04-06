@@ -1,0 +1,408 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Your Vehicle or Parts - Revamp.com</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+    <style>
+        .sell-form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1d3557;
+        }
+        
+        .sell-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            grid-column: span 2;
+            background-color: #1d3557;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #457b9d;
+        }
+        
+        .form-note {
+            grid-column: span 2;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .message-container {
+            position: relative;
+            padding-right: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .close-message {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .error-message {
+            color: #e63946;
+            background-color: #f8d7da;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Conditional fields */
+        .conditional-field {
+            display: none;
+        }
+        
+        .conditional-field.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}" class="active">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Sell Form Section -->
+    <section class="sell-form-container">
+        <h1 class="form-title">Sell Your Vehicle or Parts</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags %}{{ message.tags }}{% endif %}-message message-container">
+                    {{ message }}
+                    <button class="close-message" onclick="this.parentElement.style.display='none';">&times;</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form class="sell-form" method="POST" action="{% url 'sell' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="product-type">Product Type*</label>
+                <select id="product-type" name="product_type" required>
+                    <option value="">Select Type</option>
+                    <option value="car">Car</option>
+                    <option value="bike">Bike</option>
+                    <option value="parts">Parts</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="title">Title*</label>
+                <input type="text" id="title" name="title" placeholder="e.g. Honda Civic 2022" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="brand">Brand*</label>
+                <input type="text" id="brand" name="brand" placeholder="e.g. Honda, Toyota, BMW" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="model">Model*</label>
+                <input type="text" id="model" name="model" placeholder="e.g. Civic, Camry, X5" required>
+            </div>
+            
+            <div class="form-group vehicle-field">
+                <label for="year">Year</label>
+                <input type="text" id="year" name="year" placeholder="e.g. 2022">
+            </div>
+            
+            <div class="form-group">
+                <label for="condition">Condition*</label>
+                <select id="condition" name="condition" required>
+                    <option value="">Select Condition</option>
+                    <option value="new">New</option>
+                    <option value="used">Used</option>
+                    <option value="certified">Certified Pre-Owned</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">Price (₹)*</label>
+                <input type="number" id="price" name="price" placeholder="Enter price in rupees" required>
+            </div>
+            
+            <div class="form-group vehicle-field">
+                <label for="mileage">Mileage</label>
+                <input type="text" id="mileage" name="mileage" placeholder="e.g. 15,000 miles">
+            </div>
+            
+            <div class="form-group vehicle-field">
+                <label for="fuel-type">Fuel Type</label>
+                <select id="fuel-type" name="fuel_type">
+                    <option value="">Select Fuel Type</option>
+                    <option value="Petrol">Petrol</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Electric">Electric</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="CNG">CNG</option>
+                </select>
+            </div>
+            
+            <div class="form-group vehicle-field">
+                <label for="transmission">Transmission</label>
+                <select id="transmission" name="transmission">
+                    <option value="">Select Transmission</option>
+                    <option value="Manual">Manual</option>
+                    <option value="Automatic">Automatic</option>
+                    <option value="Semi-Automatic">Semi-Automatic</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color" placeholder="e.g. Red, Blue, Black">
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location*</label>
+                <input type="text" id="location" name="location" placeholder="e.g. Mumbai, Delhi" required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="description">Description*</label>
+                <textarea id="description" name="description" placeholder="Provide detailed information about your product..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="seller-phone">Contact Phone*</label>
+                <input type="tel" id="seller-phone" name="seller_phone" placeholder="Your contact number" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="seller-id">Identification Number*</label>
+                <input type="text" id="seller-id" name="seller_identification" placeholder="Driver's license or other ID" required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="product-image">Product Image*</label>
+                <input type="file" id="product-image" name="product_image" accept="image/*" required>
+                <div class="image-preview" id="image-preview">
+                    <span>Image preview will appear here</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Listing</button>
+            
+            <p class="form-note">By submitting this form, you agree to our Terms of Service and Privacy Policy. Your listing will be reviewed before being published.</p>
+        </form>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Image preview functionality
+            const imageInput = document.getElementById('product-image');
+            const imagePreview = document.getElementById('image-preview');
+            
+            imageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.innerHTML = `<span>Image preview will appear here</span>`;
+                }
+            });
+            
+            // Show/hide fields based on product type
+            const productTypeSelect = document.getElementById('product-type');
+            const vehicleFields = document.querySelectorAll('.vehicle-field');
+            
+            productTypeSelect.addEventListener('change', function() {
+                const selectedType = this.value;
+                
+                // Show/hide vehicle-specific fields
+                vehicleFields.forEach(field => {
+                    if (selectedType === 'car' || selectedType === 'bike') {
+                        field.style.display = 'block';
+                    } else {
+                        field.style.display = 'none';
+                    }
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Image preview functionality
+            const imageInput = document.getElementById('product-image');
+            const imagePreview = document.getElementById('image-preview');
+            
+            // Auto-dismiss messages after 5 seconds
+            const messages = document.querySelectorAll('.message-container');
+            messages.forEach(message => {
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>

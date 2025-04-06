@@ -1,0 +1,479 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revamp.com - Parts</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href='{% static "css/car.css" %}'>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <section class="home" id="home" style="margin-top: -100px;">
+
+        <h3 data-speed="-2" class="home-parallax">find auto parts</h3>
+    
+        <img data-speed="5" class="home-parallax" src="{%static 'images/parts/parts-img.png' %}" alt="">
+    
+        <button data-speed="7" onclick="window.location.href='#'" class="btn home-parallax">explore parts</button>
+    
+    </section>
+    
+    <section class="icons-container">
+    
+        <div class="icons">
+            <i class="fas fa-tools"></i>
+            <div class="content">
+                <h3>1000+</h3>
+                <p>parts available</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-shipping-fast"></i>
+            <div class="content">
+                <h3>24/7</h3>
+                <p>shipping</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-users"></i>
+            <div class="content">
+                <h3>500+</h3>
+                <p>happy clients</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-cogs"></i>
+            <div class="content">
+                <h3>100+</h3>
+                <p>brands</p>
+            </div>
+        </div>
+    
+    </section>
+    
+    <section class="vehicles" id="vehicles">
+    
+        <h1 class="heading"> popular <span>parts</span> </h1>
+    
+        <div class="swiper vehicles-slider">
+    
+            <div class="swiper-wrapper">
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/parts/part-1.png' %}" alt="" style="width: 250px; height: 200px; object-fit: contain;">
+                    <div class="content">
+                        <h3>Exhaust Pipes</h3>
+                        <div class="price"> <span>price : </span> ₹15,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2023
+                            <span class="fas fa-circle"></span> genuine
+                            <span class="fas fa-circle"></span> warranty
+                        </p>
+                        <button onclick="window.location.href='#'" class="btn">check out</button>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/parts/part-2.png' %}" alt="" style="width: 250px; height: 200px; object-fit: contain;">
+                    <div class="content">
+                        <h3>Engine System</h3>
+                        <div class="price"> <span>price : </span> ₹8,500/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2023
+                            <span class="fas fa-circle"></span> genuine
+                            <span class="fas fa-circle"></span> warranty
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/parts/part-3.png' %}" alt="" style="width: 250px; height: 200px; object-fit: contain;">
+                    <div class="content">
+                        <h3>Wheele</h3>
+                        <div class="price"> <span>price : </span> ₹12,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2023
+                            <span class="fas fa-circle"></span> genuine
+                            <span class="fas fa-circle"></span> warranty
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/parts/part-4.png' %}" alt="" style="width: 250px; height: 200px; object-fit: contain;">
+                    <div class="content">
+                        <h3>Muffler</h3>
+                        <div class="price"> <span>price : </span> ₹22,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2023
+                            <span class="fas fa-circle"></span> genuine
+                            <span class="fas fa-circle"></span> warranty
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="swiper-pagination"></div>
+    
+        </div>
+    
+    </section>
+    
+    
+    <section class="featured" id="featured">
+    
+        <center><h1 class="heading"> <span>featured</span> parts </h1></center>
+    
+        <div class="product-grid">
+            {% if parts_products %}
+                {% for product in parts_products %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            {% if product.image %}
+                                {% if 'http' in product.image %}
+                                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                                {% else %}
+                                    <img src="{% static 'uploads/' %}{{ product.image }}" alt="{{ product.title }}">
+                                {% endif %}
+                            {% else %}
+                                <img src="{% static 'images/parts/part-1.png' %}" alt="{{ product.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <h3>{{ product.title }}</h3>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="price">₹{{ product.price|stringformat:"d"|slice:":-3" }},{{ product.price|stringformat:"d"|slice:"-3:" }}</div>
+                            <div class="product-meta">
+                                <span>{{ product.brand }}</span>
+                                <span>{{ product.location }}</span>
+                            </div>
+                            <button onclick="window.location.href=`{% if is_authenticated %}{% url 'product_detail' product.id %}{% else %}{% url 'login' %}{% endif %}`" class="view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default parts displays if no products in database -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{%static 'images/parts/part-1.png' %}" alt="Engine Parts">
+                    </div>
+                    <div class="product-info">
+                        <h3>Engine Components</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="price">₹15,000</div>
+                        <div class="product-meta">
+                            <span>Toyota</span>
+                            <span>Delhi</span>
+                        </div>
+                        <button onclick="window.location.href='#'" class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{%static 'images/parts/part-2.png' %}" alt="Brake System">
+                    </div>
+                    <div class="product-info">
+                        <h3>Brake System</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="price">₹8,500</div>
+                        <div class="product-meta">
+                            <span>Honda</span>
+                            <span>Mumbai</span>
+                        </div>
+                        <button onclick="window.location.href='#'" class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{%static 'images/parts/part-3.png' %}" alt="Suspension Kit">
+                    </div>
+                    <div class="product-info">
+                        <h3>Suspension Kit</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="price">₹12,000</div>
+                        <div class="product-meta">
+                            <span>BMW</span>
+                            <span>Bangalore</span>
+                        </div>
+                        <button onclick="window.location.href='#'" class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        
+        <h3 style="color: #3e3e3e;">subscribe for latest updates</h3>
+        <p style="color: #3e3e3e;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, suscipit.</p>
+    
+       <form action="">
+            <input type="email" placeholder="enter your email">
+            <input type="submit" value="subscribe">
+       </form>
+    
+    </section>
+    
+    <section class="reviews" id="reviews">
+    
+        <h1 class="heading"> client's <span>review</span> </h1>
+    
+        <div class="swiper review-slider">
+    
+            <div class="swiper-wrapper">
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-1.png' %}" alt="">
+                    <div class="content">
+                        <p>The parts I ordered were genuine and arrived quickly. Great service!</p>
+                        <h3>John Smith</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-2.png' %}" alt="">
+                    <div class="content">
+                        <p>Found exactly what I needed for my vintage car restoration. Excellent quality!</p>
+                        <h3>Sarah Johnson</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-3.png' %}" alt="">
+                    <div class="content">
+                        <p>Great prices and the customer service was very helpful in finding the right parts.</p>
+                        <h3>Michael Brown</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="swiper-pagination"></div>
+    
+        </div>
+    
+    </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Add Swiper JS -->
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    
+    <script>
+        window.onscroll = () =>{
+            menu.classList.remove('fa-times');
+            navbar.classList.remove('active');
+
+            if(window.scrollY > 0){
+                document.querySelector('.header').classList.add('active');
+            }else{
+                document.querySelector('.header').classList.remove('active');
+            };
+        };
+
+        document.querySelector('.home').onmousemove = (e) =>{
+            document.querySelectorAll('.home-parallax').forEach(elm =>{
+                let speed = elm.getAttribute('data-speed');
+                let x = (window.innerWidth - e.pageX * speed) / 90;
+                let y = (window.innerHeight - e.pageY * speed) / 90;
+                elm.style.transform = `translateX(${y}px) translateY(${x}px)`;
+            });
+        };
+
+        document.querySelector('.home').onmouseleave = (e) =>{
+            document.querySelectorAll('.home-parallax').forEach(elm =>{
+                elm.style.transform = `translateX(0px) translateY(0px)`;
+            });
+        };
+
+        // Initialize Swiper instances
+        var vehiclesSwiper = new Swiper(".vehicles-slider", {
+            grabCursor: true,
+            centeredSlides: true,  
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 9500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+
+        var reviewSwiper = new Swiper(".review-slider", {
+            grabCursor: true,
+            centeredSlides: true,  
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 9500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+    </script>
+</body>
+</html>

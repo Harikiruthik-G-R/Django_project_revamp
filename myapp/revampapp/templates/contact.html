@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revamp.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+</head>
+<style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #484646;
+            color: white;
+        }
+
+        .contact-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('car-interior-bg.jpg');  /* Replace with your car interior image */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .contact-header {
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+
+        .contact-header h1 {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .contact-header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #d1d1d1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 20px;
+            gap: 30px;
+        }
+
+        .contact-info {
+            background-color: #cc1111;
+            color: white;
+            padding: 30px;
+            min-width: 250px;
+            max-width: 350px;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            position: relative;
+        }
+
+        .info-item {
+            margin-bottom: 25px;
+        }
+
+        .info-item h4 {
+            margin-bottom: 10px;
+            font-weight: normal;
+            font-size: 15px;
+        }
+
+        .info-item p {
+            margin-left: 5px;
+            font-size: 14px;
+        }
+
+        .contact-form {
+            flex-grow: 1;
+            max-width: 450px;
+            padding: 20px;
+        }
+
+        .contact-form h3 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(48, 48, 48, 0.7);
+            border: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        textarea.form-control {
+            height: 120px;
+            resize: none;
+        }
+
+        .submit-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: rgb(20, 19, 19);
+            color: black;
+        }
+
+        /* Icons using pseudo-elements */
+        .info-item::before {
+            display: inline-block;
+            width: 20px;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+
+        .phone::before {
+            content: "📞";
+        }
+
+        .email::before {
+            content: "✉️";
+        }
+</style>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}" class="active">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="contact-container">
+        <div class="background-image"></div>
+        
+        <div class="contact-header">
+            <h1>Contact Us</h1>
+            <p>Your satisfaction is our top priority. Our expert team is ready to assist you with all your automotive needs, from maintenance services to performance upgrades. Reach out today and experience our commitment to excellence.</p>
+        </div>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="info-item location">
+                    <p>REVAMP</p>
+                    <p></p>
+                </div>
+                
+                <div class="info-item phone">
+                    <h4>Phone</h4>
+                    <p>8838497231</p>
+                </div>
+                
+                <div class="info-item email">
+                    <h4>Email</h4>
+                    <p>kathir@gmail.com</p>
+                </div>
+                
+                
+            </div>
+            
+            <div class="contact-form">
+                <h3>Send A Message</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="How can we help with your automotive needs? Tell us about your vehicle and the services you're interested in." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">SEND MESSAGE</button>
+                    
+                </form>
+            </div>
+        </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Vehicle Marketplace</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+    <!-- Assuming the CSS file is named styles.css -->
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Revamp</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}" class="active">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="auth-button login">Log In</button>
+                <button class="auth-button signup">Sign Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Form -->
+    <div style="max-width: 500px; margin: 80px auto; padding: 30px; background-color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; margin-bottom: 30px; color: #333;">Create Your Account</h2>
+        
+        <form action="{% url 'signup' %}" method="POST">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="fullname" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="email" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Email Address</label>
+                <input type="email" id="email" name="email" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="password" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Password</label>
+                <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <label for="confirm-password" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: flex; align-items: center; color: #555; cursor: pointer;">
+                    <input type="checkbox" required style="margin-right: 10px;">
+                    I agree to the <a href="#" style="color: #ff6b00; margin: 0 5px;">Terms of Service</a> and <a href="#" style="color: #ff6b00; margin-left: 5px;">Privacy Policy</a>
+                </label>
+            </div>
+            
+            <button type="submit" style="width: 100%; padding: 12px; background-color: #ff6b00; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.3s;">Create Account</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 25px; color: #666;">
+            Already have an account? <a href="{% url 'login' %}" style="color: #ff6b00; text-decoration: none;">Log In</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>AutoBazaar</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Buy</a></li>
+                    <li><a href="#">Sell</a></li>
+                    <li><a href="#">Featured</a></li>
+                    <li><a href="#">Offers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Stay Connected</h3>
+                <p style="color: #bbb; margin-bottom: 15px;">Subscribe to our newsletter for the latest deals and updates.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">ig</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 AutoBazaar. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

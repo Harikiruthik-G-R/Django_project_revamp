@@ -1,0 +1,585 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revamp.com</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href='{% static "css/car.css" %}'>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}" class="active">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <section class="home" id="home">
+
+        <h3 data-speed="-2" class="home-parallax">find your bike</h3>
+    
+        <center><img data-speed="5" class="home-parallax" src="{%static 'images/bike/hm.png' %}" alt="" style="image-rendering: high-quality; object-fit: contain; max-width: 100%;height: 330px;"></center>
+    
+        <button data-speed="7" onclick="window.location.href='#'" class="btn home-parallax">explore bikes</button>
+    
+    </section>
+    
+    <section class="icons-container">
+
+        <div class="icons">
+            <i class="fas fa-home"></i>
+            <div class="content">
+                <h3>150+</h3>
+                <p>branches</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-motorcycle"></i>
+            <div class="content">
+                <h3>4770+</h3>
+                <p>bikes sold</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-users"></i>
+            <div class="content">
+                <h3>320+</h3>
+                <p>happy clients</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-motorcycle"></i>
+            <div class="content">
+                <h3>1500+</h3>
+                <p>news bikes</p>
+            </div>
+        </div>
+    
+    </section>
+    
+    <section class="vehicles" id="vehicles">
+
+        <h1 class="heading"> popular <span>vehicles</span> </h1>
+    
+        <div class="swiper vehicles-slider">
+    
+            <div class="swiper-wrapper">
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/bike/m1.png' %}" alt="">
+                    <div class="content">
+                        <h3>Ducati MV3</h3>
+                        <div class="price"> <span>price : </span> $62,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> automatic
+                            <span class="fas fa-circle"></span> petrol
+                            <span class="fas fa-circle"></span> 183mph
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/bike/m2.png' %}" alt="">
+                    <div class="content">
+                        <h3>Ducati Sifer</h3>
+                        <div class="price"> <span>price : </span> $62,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> automatic
+                            <span class="fas fa-circle"></span> petrol
+                            <span class="fas fa-circle"></span> 183mph
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/bike/m3.png' %}" alt="">
+                    <div class="content">
+                        <h3>Ducati Hydra</h3>
+                        <div class="price"> <span>price : </span> $62,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> automatic
+                            <span class="fas fa-circle"></span> petrol
+                            <span class="fas fa-circle"></span> 183mph
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/bike/m4.png' %}" alt="">
+                    <div class="content">
+                        <h3>Ducati Diavel</h3>
+                        <div class="price"> <span>price : </span> $62,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> automatic
+                            <span class="fas fa-circle"></span> petrol
+                            <span class="fas fa-circle"></span> 183mph
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/bike/m5.png' %}" alt="">
+                    <div class="content">
+                        <h3>Ducati M7</h3>
+                        <div class="price"> <span>price : </span> $62,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> automatic
+                            <span class="fas fa-circle"></span> petrol
+                            <span class="fas fa-circle"></span> 183mph
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/bike/m3.png' %}" alt="">
+                    <div class="content">
+                        <h3>Ducati Sever</h3>
+                        <div class="price"> <span>price : </span> $62,000/- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> automatic
+                            <span class="fas fa-circle"></span> petrol
+                            <span class="fas fa-circle"></span> 183mph
+                        </p>
+                        <a href="#" class="btn">check out</a>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="swiper-pagination"></div>
+    
+        </div>
+    
+    </section>
+    
+    
+    <section class="featured" id="featured">
+    
+        <center><h1 class="heading"> <span>featured</span> bikes </h1></center>
+    
+        <div class="product-grid">
+            {% if bike_products %}
+                {% for product in bike_products %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            {% if product.image %}
+                                {% if 'http' in product.image %}
+                                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                                {% else %}
+                                    <img src="{% static 'uploads/' %}{{ product.image }}" alt="{{ product.title }}">
+                                {% endif %}
+                            {% else %}
+                                <img src="{% static 'images/car/car-1.png' %}" alt="{{ product.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <h3>{{ product.title }}</h3>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="price">₹{{ product.price|stringformat:"d"|slice:":-3" }},{{ product.price|stringformat:"d"|slice:"-3:" }}</div>
+                            <div class="product-meta">
+                                <span>{{ product.year }}</span>
+                                <span>{{ product.location }}</span>
+                            </div>
+                            <button onclick="window.location.href=`{% if is_authenticated %}{% url 'product_detail' product.id %}{% else %}{% url 'login' %}{% endif %}`" class="view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default car displays if no products in database -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{%static 'images/car/car-1.png' %}" alt="Luxury Car">
+                    </div>
+                    <div class="product-info">
+                        <h3>Luxury car</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="price">₹105000,000</div>
+                        <div class="product-meta">
+                            <span>7</span>
+                            <span>Mumbai</span>
+                        </div>
+                        <button onclick="window.location.href='#'" class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{%static 'images/car/car-2.png' %}" alt="Luxury Car">
+                    </div>
+                    <div class="product-info">
+                        <h3>Luxury car</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="price">₹105000,000</div>
+                        <div class="product-meta">
+                            <span>7</span>
+                            <span>Mumbai</span>
+                        </div>
+                        <button onclick="window.location.href='#'" class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{%static 'images/car/car-3.png' %}" alt="Luxury Car">
+                    </div>
+                    <div class="product-info">
+                        <h3>Luxury car</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="price">₹105000,000</div>
+                        <div class="product-meta">
+                            <span>7</span>
+                            <span>Mumbai</span>
+                        </div>
+                        <button onclick="window.location.href='#'" class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        
+        <h3 style="color: #3e3e3e;">subscribe for latest updates</h3>
+        <p style="color: #3e3e3e;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, suscipit.</p>
+    
+       <form action="">
+            <input type="email" placeholder="enter your email">
+            <input type="submit" value="subscribe">
+       </form>
+    
+    </section>
+    
+    <section class="reviews" id="reviews">
+    
+        <h1 class="heading"> client's <span>review</span> </h1>
+    
+        <div class="swiper review-slider">
+    
+            <div class="swiper-wrapper">
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-1.png' %}" alt="">
+                    <div class="content">
+                        <p>The Ducati Sifer I purchased last month has exceeded all my expectations. The handling is superb and the power delivery is smooth. Best bike I've ever owned!</p>
+                        <h3>Sarah Johnson</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-2.png' %}" alt="">
+                    <div class="content">
+                        <p>Revamp made buying my dream bike so easy. Their customer service was exceptional and they helped me find the perfect Ducati within my budget. Highly recommend!</p>
+                        <h3>Michael Chen</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-4.png' %}" alt="">
+                    <div class="content">
+                        <p>I was hesitant about buying a used bike online, but Revamp's verification process gave me confidence. My Ducati Hydra arrived in even better condition than the photos showed!</p>
+                        <h3>Priya Patel</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-5.png' %}" alt="">
+                    <div class="content">
+                        <p>The financing options at Revamp made it possible for me to get my dream Ducati M7. The paperwork was minimal and I was riding my new bike within days. Amazing experience!</p>
+                        <h3>Robert Williams</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{%static 'images/car/pic-6.png' %}" alt="">
+                    <div class="content">
+                        <p>As a motorcycle enthusiast for over 20 years, I've never had such a smooth buying experience. The Ducati Diavel I purchased through Revamp is a masterpiece and was delivered in perfect condition.</p>
+                        <h3>Alejandro Rodriguez</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="swiper-pagination"></div>
+    
+        </div>
+    
+    </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Add Swiper JS -->
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    
+    <script>
+        window.onscroll = () =>{
+
+        menu.classList.remove('fa-times');
+        navbar.classList.remove('active');
+
+        if(window.scrollY > 0){
+            document.querySelector('.header').classList.add('active');
+        }else{
+            document.querySelector('.header').classList.remove('active');
+        };
+
+        };
+
+        document.querySelector('.home').onmousemove = (e) =>{
+
+        document.querySelectorAll('.home-parallax').forEach(elm =>{
+
+            let speed = elm.getAttribute('data-speed');
+
+            let x = (window.innerWidth - e.pageX * speed) / 90;
+            let y = (window.innerHeight - e.pageY * speed) / 90;
+
+            elm.style.transform = `translateX(${y}px) translateY(${x}px)`;
+
+        });
+
+        };
+
+
+        document.querySelector('.home').onmouseleave = (e) =>{
+
+        document.querySelectorAll('.home-parallax').forEach(elm =>{
+
+            elm.style.transform = `translateX(0px) translateY(0px)`;
+
+        });
+
+        };
+
+        // Initialize Swiper instances
+        var vehiclesSwiper = new Swiper(".vehicles-slider", {
+            grabCursor: true,
+            centeredSlides: true,  
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 9500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+
+        // Initialize both featured sliders
+        var featuredSwiper = new Swiper(".featured-slider", {
+            grabCursor: true,
+            centeredSlides: true,  
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 9500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+
+        var reviewSwiper = new Swiper(".review-slider", {
+            grabCursor: true,
+            centeredSlides: true,  
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 9500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+    </script>
+</body>
+</html>

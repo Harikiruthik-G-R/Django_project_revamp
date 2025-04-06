@@ -1,0 +1,342 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }} - Revamp.com</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+    <style>
+        .product-detail {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .product-gallery {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .thumbnail-row {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 20px;
+        }
+        
+        .product-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .meta-item {
+            background-color: #f1faee;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .product-description {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .action-btn {
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .contact-btn {
+            background-color: #1d3557;
+            color: white;
+        }
+        
+        .wishlist-btn {
+            background-color: white;
+            color: #1d3557;
+            border: 2px solid #1d3557;
+        }
+        
+        .seller-info {
+            background-color: #f1faee;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .seller-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .seller-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .seller-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .seller-details h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .seller-details p {
+            margin: 5px 0 0;
+            color: #666;
+        }
+        
+        .seller-rating {
+            color: #f4a261;
+            margin-top: 5px;
+        }
+        
+        .specifications {
+            margin-top: 40px;
+        }
+        
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .spec-table tr:nth-child(odd) {
+            background-color: #f1faee;
+        }
+        
+        .spec-table th, .spec-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .spec-table th {
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Product Detail Section -->
+    <section class="product-detail">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="{% static product.image %}" alt="{{ product.title }}">
+            </div>
+            <div class="thumbnail-row">
+                <div class="thumbnail">
+                    <img src="{% static product.image %}" alt="{{ product.title }}">
+                </div>
+                <!-- More thumbnails would go here in a real implementation -->
+            </div>
+        </div>
+        
+        <div class="product-info">
+            <h1 class="product-title">{{ product.title }}</h1>
+            <div class="product-price">{{ product.price }}</div>
+            
+            <div class="product-meta">
+                <span class="meta-item">{{ product.condition }}</span>
+                <span class="meta-item">{{ product.location }}</span>
+                <span class="meta-item">{{ product.mileage }}</span>
+            </div>
+            
+            <div class="product-description">
+                <p>{{ product.description }}</p>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn contact-btn">Contact Seller</button>
+                <button class="action-btn wishlist-btn">Add to Wishlist</button>
+            </div>
+            
+            <div class="seller-info">
+                <div class="seller-header">
+                    <div class="seller-avatar">
+                        <img src="{% static 'images/avatar.jpg' %}" alt="Seller">
+                    </div>
+                    <div class="seller-details">
+                        <h3>{{ product.seller_name }}</h3>
+                        <p>Member since {{ product.seller_since }}</p>
+                        <div class="seller-rating">★★★★☆ (4.5/5)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="specifications">
+                <h2>Specifications</h2>
+                <table class="spec-table">
+                    <tr>
+                        <th>Make</th>
+                        <td>{{ product.make }}</td>
+                    </tr>
+                    <tr>
+                        <th>Model</th>
+                        <td>{{ product.model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>{{ product.year }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mileage</th>
+                        <td>{{ product.mileage }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fuel Type</th>
+                        <td>{{ product.fuel_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Transmission</th>
+                        <td>{{ product.transmission }}</td>
+                    </tr>
+                    <tr>
+                        <th>Color</th>
+                        <td>{{ product.color }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

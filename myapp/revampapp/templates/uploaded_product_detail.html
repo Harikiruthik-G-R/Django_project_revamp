@@ -1,0 +1,403 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }} - Revamp.com</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+    <style>
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-detail-header {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .product-detail-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            margin-right: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .product-detail-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .product-detail-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-detail-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .product-detail-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+        
+        .product-detail-meta {
+            margin-bottom: 20px;
+        }
+        
+        .meta-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .meta-label {
+            width: 120px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .meta-value {
+            color: #333;
+        }
+        
+        .product-detail-actions {
+            margin-top: 30px;
+        }
+        
+        .action-button {
+            padding: 12px 24px;
+            margin-right: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .contact-btn {
+            background-color: #ff6600;
+            color: white;
+        }
+        
+        .contact-btn:hover {
+            background-color: #e55c00;
+        }
+        
+        .wishlist-btn {
+            background-color: #333;
+            color: white;
+        }
+        
+        .wishlist-btn:hover {
+            background-color: #222;
+        }
+        
+        .product-detail-description {
+            margin-top: 40px;
+        }
+        
+        .description-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .description-content {
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .product-detail-features {
+            margin-top: 30px;
+        }
+        
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            color: #ff6600;
+            margin-right: 10px;
+        }
+        
+        .seller-info {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .seller-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .seller-details {
+            display: flex;
+            align-items: center;
+        }
+        
+        .seller-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+        }
+        
+        .seller-contact {
+            flex: 1;
+        }
+        
+        .seller-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .seller-location {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .seller-phone {
+            color: #ff6600;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail-header {
+                flex-direction: column;
+            }
+            
+            .product-detail-image {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}" class="active">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Product Detail Content -->
+    <div class="product-detail-container">
+        <div class="product-detail-header">
+            <div class="product-detail-image">
+                {% if product.image %}
+                    {% if 'http' in product.image %}
+                        <img src="{{ product.image }}" alt="{{ product.title }}">
+                    {% else %}
+                        <!-- Remove the debug text that's showing up -->
+                        <img src="{% static 'uploads/' %}{{ product.image }}" alt="{{ product.title }}">
+                    {% endif %}
+                {% else %}
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="{{ product.title }}">
+                {% endif %}
+            </div>
+            
+            <div class="product-detail-info">
+                <h1 class="product-detail-title">{{ product.title }}</h1>
+                <div class="product-detail-price">₹{{ product.price|stringformat:"d"|slice:":-3" }},{{ product.price|stringformat:"d"|slice:"-3:" }}</div>
+                
+                <div class="product-detail-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Type:</div>
+                        <div class="meta-value">{{ product.product_type|title }}</div>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <div class="meta-label">Brand:</div>
+                        <div class="meta-value">{{ product.brand|title }}</div>
+                    </div>
+                    
+                    {% if product.model %}
+                    <div class="meta-item">
+                        <div class="meta-label">Model:</div>
+                        <div class="meta-value">{{ product.model }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.year %}
+                    <div class="meta-item">
+                        <div class="meta-label">Year:</div>
+                        <div class="meta-value">{{ product.year }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="meta-item">
+                        <div class="meta-label">Condition:</div>
+                        <div class="meta-value">{{ product.condition|title }}</div>
+                    </div>
+                    
+                    {% if product.mileage %}
+                    <div class="meta-item">
+                        <div class="meta-label">Mileage:</div>
+                        <div class="meta-value">{{ product.mileage }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.fuel_type %}
+                    <div class="meta-item">
+                        <div class="meta-label">Fuel Type:</div>
+                        <div class="meta-value">{{ product.fuel_type }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.transmission %}
+                    <div class="meta-item">
+                        <div class="meta-label">Transmission:</div>
+                        <div class="meta-value">{{ product.transmission }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.color %}
+                    <div class="meta-item">
+                        <div class="meta-label">Color:</div>
+                        <div class="meta-value">{{ product.color }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="meta-item">
+                        <div class="meta-label">Location:</div>
+                        <div class="meta-value">{{ product.location }}</div>
+                    </div>
+                </div>
+                
+                <div class="product-detail-actions">
+                    <button class="action-button contact-btn">Contact Seller</button>
+                    <button class="action-button wishlist-btn">Add to Wishlist</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-detail-description">
+            <h2 class="description-title">Description</h2>
+            <div class="description-content">
+                {{ product.description }}
+            </div>
+        </div>
+        
+        <div class="seller-info">
+            <h2 class="seller-title">Seller Information</h2>
+            <div class="seller-details">
+                <div class="seller-avatar">
+                    <span>{{ user_name|slice:":1" }}</span>
+                </div>
+                <div class="seller-contact">
+                    <div class="seller-name">{{ user_name }}</div>
+                    <div class="seller-location">{{ product.location }}</div>
+                    {% if product.seller_phone %}
+                    <div class="seller-phone">{{ product.seller_phone }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

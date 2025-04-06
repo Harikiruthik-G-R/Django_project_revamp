@@ -1,0 +1,668 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revamp.com</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}'>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">REVAMP</div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'car' %}">Cars</a>
+                <a href="{% url 'bike' %}">Bikes</a>
+                <a href="{% url 'parts' %}">Parts</a>
+                <a href="{% url 'sell' %}" class="active">Sell</a>
+                <a href="#">Offers</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        <span>Welcome, {{ user_name }}  </span>
+                        <button class="auth-button logout" onclick="window.location.href=`{% url 'logout' %}`">Logout</button>
+                    </div>
+                {% else %}
+                    <button class="auth-button login" onclick="window.location.href=`{% url 'login' %}`">Login</button>
+                    <button class="auth-button signup" onclick="window.location.href=`{% url 'signup' %}`">Sign Up</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Buy, Sell, and Revamp Your Ride</h1>
+        <p>The ultimate marketplace for cars, bikes, and parts. Join thousands of enthusiasts finding their perfect match.</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search cars, bikes, or parts...">
+            <button>Search</button>
+        </div>
+    </section>
+    
+    <!-- Categories Section -->
+    <section class="categories">
+        <h2 class="section-title">Browse Categories</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="{%static 'images/cars.jpg'%}" alt="Cars" style="height: 100%;">
+                </div>
+                <div class="category-info">
+                    <h3>Cars</h3>
+                    <p>Find new and used cars from top brands</p>
+                    <a href="{% url 'car' %}" class="browse-btn">Browse Cars</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img ">
+                    <img src="{%static 'images/bike.webp'%}" alt="Bikes" style="height: 100%;">
+                </div>
+                <div class="category-info">
+                    <h3>Bikes</h3>
+                    <p>Explore a wide range of motorcycles</p>
+                    <a href="#" class="browse-btn">Browse Bikes</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="{%static 'images/carparts.jpg'%}" alt="Car Parts" style="height: 100%;" >
+                </div>
+                <div class="category-info">
+                    <h3>Car Parts</h3>
+                    <p>Genuine and aftermarket car parts</p>
+                    <a href="#" class="browse-btn" style="margin-top: 20px;">Browse Parts</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="{%static 'images/bikeparts.jpg'%}" alt="Bike Parts" style="height: 100%;">
+                </div>
+                <div class="category-info">
+                    <h3>Bike Parts</h3>
+                    <p>Performance and replacement parts</p>
+                    <a href="#" class="browse-btn">Browse Parts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Listings Section -->
+    <section class="featured">
+        <div class="featured-container">
+            <h2 class="section-title">Featured Listings</h2>
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label for="vehicle-type">Vehicle Type</label>
+                    <select id="vehicle-type">
+                        <option value="all">All Types</option>
+                        <option value="car">Cars</option>
+                        <option value="bike">Bikes</option>
+                        <option value="parts">Parts</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="brand">Brand</label>
+                    <select id="brand">
+                        <option value="all">All Brands</option>
+                        <option value="toyota">Toyota</option>
+                        <option value="honda">Honda</option>
+                        <option value="bmw">BMW</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="harley">Harley Davidson</option>
+                        <option value="ducati">Ducati</option>
+                        <option value="yamaha">Yamaha</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price">Price Range</label>
+                    <select id="price">
+                        <option value="all">All Prices</option>
+                        <option value="0-5000">₹0 - ₹5,00,000</option>
+                        <option value="5000-10000">₹5,00,000 - ₹10,00,000</option>
+                        <option value="10000-20000">₹10,00,000 - ₹20,00,000</option>
+                        <option value="20000+">₹20,00,000+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="condition">Condition</label>
+                    <select id="condition">
+                        <option value="all">All Conditions</option>
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                        <option value="certified">Certified Pre-Owned</option>
+                    </select>
+                </div>
+                <button class="filter-btn">Apply Filters</button>
+            </div>
+            
+            <!-- Product Grid -->
+            <div class="product-grid">
+                {% if products %}
+                    {% for product in products %}
+                        <div class="product-card" data-type="{{ product.product_type }}" data-brand="{{ product.brand }}" data-price="{{ product.price }}" data-condition="{{ product.condition }}">
+                            <div class="product-img">
+                                {% if product.image %}
+                                    {% if 'http' in product.image %}
+                                        <img src="{{ product.image }}" alt="{{ product.title }}" style="height: 100%;">
+                                    {% else %}
+                                        <!-- Updated to use static tag for consistent image handling -->
+                                        <img src="{% static 'uploads/' %}{{ product.image }}" alt="{{ product.title }}" style="height: 100%;">
+                                    {% endif %}
+                                {% else %}
+                                    <img src="{% static 'images/placeholder.jpg' %}" alt="{{ product.title }}" style="height: 100%;">
+                                {% endif %}
+                            </div>
+                            <div class="product-info">
+                                <h3>{{ product.title }}</h3>
+                                <div class="price">₹{{ product.price|stringformat:"d"|slice:":-3" }},{{ product.price|stringformat:"d"|slice:"-3:" }}</div>
+                                <div class="product-meta">
+                                    {% if product.mileage %}<span>{{ product.mileage }}</span>{% endif %}
+                                    <span>{{ product.location }}</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="action-btn details-btn" onclick="window.location.href=`{% if is_authenticated %}{% url 'product_detail' product.id|stringformat:'s' %}{% else %}{% url 'login' %}{% endif %}`">View Details</button>
+                                    <button class="action-btn wishlist-btn">♡</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                
+                    <div class="product-card" data-type="car" data-brand="honda" data-price="800500" data-condition="used">
+                        <div class="product-img">
+                            <img src="{% static 'images/honda-civic.webp' %}" alt="Honda Civic" style="height: 100%;">
+                        </div>
+                        <div class="product-info">
+                            <h3>Honda Civic 2022</h3>
+                            <div class="price">₹8,00,500</div>
+                            <div class="product-meta">
+                                <span>15,000 miles</span>
+                                <span>San Francisco, CA</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="action-btn details-btn" onclick="window.location.href=`{% if is_authenticated %}{% url 'static_product_detail' 1 %}{% else %}{% url 'login' %}{% endif %}`">View Details</button>
+                                <button class="action-btn wishlist-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-type="bike" data-brand="yamaha" data-price="200750" data-condition="new">
+                        <div class="product-img">
+                            <img src="{% static 'images/yamaha.webp' %}" alt="Yamaha R1" style="height: 100%;">
+                        </div>
+                        <div class="product-info">
+                            <h3>Yamaha YZF-R1 2021</h3>
+                            <div class="price">₹2,00,750</div>
+                            <div class="product-meta">
+                                <span>8,500 miles</span>
+                                <span>Portland, OR</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="action-btn details-btn" onclick="window.location.href=`{% if is_authenticated %}{% url 'static_product_detail' 2 %}{% else %}{% url 'login' %}{% endif %}`">View Details</button>
+                                <button class="action-btn wishlist-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-type="car" data-brand="bmw" data-price="700900" data-condition="used">
+                        <div class="product-img">
+                            <img src="{% static 'images/BMW.webp' %}" alt="BMW X5" style="height: 100%;">
+                        </div>
+                        <div class="product-info">
+                            <h3>BMW X5 2020</h3>
+                            <div class="price">₹7,00,900</div>
+                            <div class="product-meta">
+                                <span>25,000 miles</span>
+                                <span>Chicago, IL</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="action-btn details-btn" onclick="window.location.href=`{% if is_authenticated %}{% url 'static_product_detail' 3 %}{% else %}{% url 'login' %}{% endif %}`">View Details</button>
+                                <button class="action-btn wishlist-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-type="bike" data-brand="harley davidson" data-price="919800" data-condition="used">
+                        <div class="product-img">
+                            <img src="{% static 'images/Harley.webp' %}" alt="Harley Davidson" style="height: 100%;">
+                        </div>
+                        <div class="product-info">
+                            <h3>Harley-Davidson Street Glide</h3>
+                            <div class="price">₹9,19,800</div>
+                            <div class="product-meta">
+                                <span>12,400 miles</span>
+                                <span>Austin, TX</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="action-btn details-btn" onclick="window.location.href=`{% if is_authenticated %}{% url 'static_product_detail' 4 %}{% else %}{% url 'login' %}{% endif %}`">View Details</button>
+                                <button class="action-btn wishlist-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+    <!-- Offers Section -->
+    <section class="offers">
+        <h2 class="section-title">Special Offers</h2>
+        
+        <div class="offer-banner">
+            <h2>SPRING SALE - UP TO 30% OFF</h2>
+            <p>Limited time offers on selected vehicles and parts. Don't miss out!</p>
+            <a href="#" class="browse-btn">View All Offers</a>
+        </div>
+        
+        <div class="offer-grid">
+            <div class="offer-card">
+                <div class="offer-badge">20% OFF</div>
+                <div class="offer-img">
+                    <img src="{% static 'images/Toyota.webp' %}" alt="Toyota Camry" style="height: 100%";>
+                </div>
+                <div class="offer-info">
+                    <h3>Toyota Camry 2021</h3>
+                    <div class="price-container">
+                        <span class="original-price">₹14,24,500</span>
+                        <span class="offer-price">₹19,00,600</span>
+                    </div>
+                    <div class="timer">
+                        <div class="timer-unit">2 Days</div>
+                        <div class="timer-unit">11 Hours</div>
+                        <div class="timer-unit">45 Mins</div>
+                    </div>
+                    <button class="browse-btn">View Deal</button>
+                </div>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">30% OFF</div>
+                <div class="offer-img">
+                    <img src="{% static 'images/Ducati.jpg' %}" alt="Ducati Panigale" style="height: 100%">
+                </div>
+                <div class="offer-info">
+                    <h3>Ducati Panigale V4</h3>
+                    <div class="price-container">
+                        <span class="original-price">₹55,28,000</span>
+                        <span class="offer-price">₹80,19,600</span>
+                    </div>
+                    <div class="timer">
+                        <div class="timer-unit">1 Day</div>
+                        <div class="timer-unit">8 Hours</div>
+                        <div class="timer-unit">20 Mins</div>
+                    </div>
+                    <button class="browse-btn">View Deal</button>
+                </div>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">25% OFF</div>
+                <div class="offer-img">
+                    <img src="{% static 'images/Parts.jpg' %}" alt="Car Parts Bundle" style="height: 100%">
+                </div>
+                <div class="offer-info">
+                    <h3>Performance Parts Bundle</h3>
+                    <div class="price-container">
+                        <span class="original-price">₹41,200</span>
+                        <span class="offer-price">₹88,900</span>
+                    </div>
+                    <div class="timer">
+                        <div class="timer-unit">3 Days</div>
+                        <div class="timer-unit">5 Hours</div>
+                        <div class="timer-unit">10 Mins</div>
+                    </div>
+                    <button class="browse-btn">View Deal</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sell Your Vehicle Section -->
+    <section class="sell-section">
+        <div class="sell-container">
+            <h2>Ready to Sell Your Vehicle or Parts?</h2>
+            <p>Join thousands of sellers who found the right buyers on Revamp. It's quick, easy, and secure.</p>
+            
+            <div class="sell-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Listing</h3>
+                    <p>Sign up and create your detailed listing with photos and specifications.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Get Offers</h3>
+                    <p>Receive notifications when buyers show interest in your listing.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Secure Transaction</h3>
+                    <p>Complete the sale with our secure payment system and support.</p>
+                </div>
+            </div>
+            
+            <a href="#" class="sell-cta">Start Selling Now</a>
+        </div>
+    </section>
+    <section class="testimonials">
+        <h2 class="section-title">What Our Users Say</h2>
+        
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "I sold my Kawasaki Ninja within 3 days of listing it on Revamp. The process was smooth and I got a fair price. Highly recommended for bike enthusiasts!"
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="/api/placeholder/50/50" alt="Mike">
+                    </div>
+                    <div class="author-info">
+                        <h4>Mike Johnson</h4>
+                        <p>Bike Seller</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "Found my dream BMW 5-Series on Revamp after searching for months. The filters made it easy to find exactly what I was looking for, and the seller was verified which gave me confidence."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="/api/placeholder/50/50" alt="Sarah">
+                    </div>
+                    <div class="author-info">
+                        <h4>Sarah Williams</h4>
+                        <p>Car Buyer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "As an auto parts dealer, Revamp has become my go-to platform. The customer base is great and the selling process is straightforward. Much better than other marketplaces I've tried."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="/api/placeholder/50/50" alt="Robert">
+                    </div>
+                    <div class="author-info">
+                        <h4>Robert Chen</h4>
+                        <p>Parts Dealer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Revamp</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for tips, news, and inspiration</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Revamp. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Login Modal (Hidden by default) -->
+    <div class="login-modal" id="loginModal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group remember-forgot">
+                    <div>
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#">Forgot password?</a>
+                </div>
+                <button type="submit" class="form-button">Login</button>
+            </form>
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sign Up Modal (Hidden by default) -->
+    <div class="signup-modal" id="signupModal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create an Account</h2>
+            <form class="signup-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <div class="form-group terms">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="form-button">Create Account</button>
+            </form>
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Simple script to toggle modals
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginButton = document.querySelector('.login');
+            const signupButton = document.querySelector('.signup');
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const closeBtns = document.querySelectorAll('.close-modal');
+            const showLoginLink = document.getElementById('showLogin');
+            const showSignupLink = document.getElementById('showSignup');
+            
+            loginButton.addEventListener('click', function() {
+                loginModal.style.display = 'block';
+            });
+            
+            signupButton.addEventListener('click', function() {
+                signupModal.style.display = 'block';
+            });
+            
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    loginModal.style.display = 'none';
+                    signupModal.style.display = 'none';
+                });
+            });
+            
+            showLoginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'block';
+            });
+            
+            showSignupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'block';
+            });
+            
+            // Filter functionality placeholder
+            const filterBtn = document.querySelector('.filter-btn');
+        });
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all the filter elements
+            const vehicleTypeFilter = document.getElementById('vehicle-type');
+            const brandFilter = document.getElementById('brand');
+            const priceFilter = document.getElementById('price');
+            const conditionFilter = document.getElementById('condition');
+            const filterButton = document.querySelector('.filter-btn');
+            const productCards = document.querySelectorAll('.product-card');
+            
+            // Add click event listener to the Apply Filters button
+            filterButton.addEventListener('click', applyFilters);
+            
+            function applyFilters() {
+                // Get the selected values from all filters
+                const vehicleType = vehicleTypeFilter.value;
+                const brand = brandFilter.value;
+                const price = priceFilter.value;
+                const condition = conditionFilter.value;
+                
+                // Loop through all product cards
+                productCards.forEach(card => {
+                    // Get product information from the card
+                    const productTitle = card.querySelector('h3').textContent.toLowerCase();
+                    const productPrice = card.querySelector('.price').textContent.replace(/[^\d]/g, '');
+                    
+                    // Initially set visibility to true
+                    let shouldShow = true;
+                    
+                    // Apply vehicle type filter
+                    if (vehicleType !== 'all') {
+                        // Check if product title contains the vehicle type
+                        if (vehicleType === 'car' && 
+                        !(productTitle.includes('civic') || productTitle.includes('bmw') || 
+                            productTitle.includes('toyota') || productTitle.includes('mercedes'))) {
+                            shouldShow = false;
+                        } else if (vehicleType === 'bike' && 
+                                !(productTitle.includes('yamaha') || productTitle.includes('harley') || 
+                                    productTitle.includes('ducati'))) {
+                            shouldShow = false;
+                        } else if (vehicleType === 'parts' && 
+                                !productTitle.includes('parts')) {
+                            shouldShow = false;
+                        }
+                    }
+                    
+                    // Apply brand filter
+                    if (brand !== 'all' && shouldShow) {
+                        if (!productTitle.includes(brand.toLowerCase())) {
+                            shouldShow = false;
+                        }
+                    }
+                    
+                    // Apply price filter
+                    if (price !== 'all' && shouldShow) {
+                        const numericPrice = parseInt(productPrice);
+                        
+                        if (price === '0-5000' && (numericPrice < 0 || numericPrice > 500000)) {
+                            shouldShow = false;
+                        } else if (price === '5000-10000' && (numericPrice < 500000 || numericPrice > 1000000)) {
+                            shouldShow = false;
+                        } else if (price === '10000-20000' && (numericPrice < 1000000 || numericPrice > 2000000)) {
+                            shouldShow = false;
+                        } else if (price === '20000+' && numericPrice < 2000000) {
+                            shouldShow = false;
+                        }
+                    }
+                    
+                    // Apply condition filter (we'll need to extract this info or add data attributes to the HTML)
+                    // For now, this is a placeholder as condition isn't in the current HTML
+                    if (condition !== 'all' && shouldShow) {
+                        // This would need custom implementation based on how condition is stored
+                        // If condition is not in the visible text, you might need data attributes
+                        
+                        // Placeholder logic - you should customize this
+                        // const productCondition = card.dataset.condition;
+                        // if (productCondition !== condition) {
+                        //     shouldShow = false;
+                        // }
+                    }
+                    
+                    // Show or hide the card based on filter results
+                    if (shouldShow) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Optional: Add reset functionality
+            function resetFilters() {
+                vehicleTypeFilter.value = 'all';
+                brandFilter.value = 'all';
+                priceFilter.value = 'all';
+                conditionFilter.value = 'all';
+                
+                // Show all products
+                productCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            }
+            
+            // Optional: You could add a reset button
+            // const resetButton = document.createElement('button');
+            // resetButton.textContent = 'Reset Filters';
+            // resetButton.className = 'reset-btn';
+            // resetButton.addEventListener('click', resetFilters);
+            // document.querySelector('.filter-bar').appendChild(resetButton);
+        });
+    </script>
+</body>
+</html>
