@@ -3,7 +3,5 @@ venv
 myapp/images
 myapp/static
 myapp/manage.py
-myapp/myapp/settings.py
+# myapp/myapp/settings.py
 myapp/db.sqlite3
-myapp/images
-myapp/static/images
